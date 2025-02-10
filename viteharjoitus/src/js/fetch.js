@@ -1,4 +1,3 @@
-// fetch.js
 const fetchData = async (url, options = {}) => {
     try {
       const response = await fetch(url, options);
@@ -16,7 +15,6 @@ const fetchData = async (url, options = {}) => {
     }
   };
   
-  // Show toast notification
   const showToast = (message, type = 'success') => {
     const toast = document.createElement('div');
     toast.classList.add('toast', type);

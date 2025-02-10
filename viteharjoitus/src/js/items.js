@@ -1,4 +1,3 @@
-// items.js
 import { fetchData } from './fetch.js';
 
 const fetchItems = async () => {

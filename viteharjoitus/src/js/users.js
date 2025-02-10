@@ -1,12 +1,10 @@
-// users.js
 import { fetchData, showToast } from './fetch.js';
 
-// Fetch users and create the user table
 const fetchUsers = async () => {
   const users = await fetchData('http://127.0.0.1:3000/api/users');
   
   const tableBody = document.querySelector('#usersTable tbody');
-  tableBody.innerHTML = ''; // Clear previous rows
+  tableBody.innerHTML = ''; 
 
   users.forEach((user) => {
     const row = document.createElement('tr');
@@ -21,11 +19,9 @@ const fetchUsers = async () => {
     tableBody.appendChild(row);
   });
 
-  // Add event listeners for Info and Delete buttons
   addButtonEventListeners();
 };
 
-// Add event listeners for Info and Delete buttons
 const addButtonEventListeners = () => {
   document.querySelectorAll('.check').forEach((button) => {
     button.addEventListener('click', async (event) => {
@@ -43,18 +39,16 @@ const addButtonEventListeners = () => {
   });
 };
 
-// Delete user
 const deleteUser = async (userId) => {
   try {
     await fetchData(`http://127.0.0.1:3000/api/users/${userId}`, { method: 'DELETE' });
     showToast('User deleted successfully');
-    fetchUsers(); // Refresh user list
+    fetchUsers(); 
   } catch (error) {
     showToast('Failed to delete user', 'error');
   }
 };
 
-// Add user through form
 const addUser = async (event) => {
   event.preventDefault();
   
@@ -75,7 +69,7 @@ const addUser = async (event) => {
       headers: { 'Content-Type': 'application/json' },
     });
     showToast('User added successfully');
-    fetchUsers(); // Refresh user list
+    fetchUsers();
   } catch (error) {
     showToast('Failed to add user', 'error');
   }
