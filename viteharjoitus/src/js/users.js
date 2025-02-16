@@ -4,7 +4,7 @@ const fetchUsers = async () => {
   const users = await fetchData('http://127.0.0.1:3000/api/users');
   
   const tableBody = document.querySelector('#usersTable tbody');
-  tableBody.innerHTML = ''; 
+  tableBody.innerHTML = ''; // Clear current rows
 
   users.forEach((user) => {
     const row = document.createElement('tr');
@@ -22,12 +22,13 @@ const fetchUsers = async () => {
   addButtonEventListeners();
 };
 
+// Add event listeners to buttons for Info and Delete
 const addButtonEventListeners = () => {
   document.querySelectorAll('.check').forEach((button) => {
     button.addEventListener('click', async (event) => {
       const userId = event.target.dataset.id;
       const user = await fetchData(`http://127.0.0.1:3000/api/users/${userId}`);
-      alert(`User Info: ${JSON.stringify(user)}`);
+      openModal(user); // Open modal with user data
     });
   });
 
@@ -39,11 +40,35 @@ const addButtonEventListeners = () => {
   });
 };
 
+// Open the modal with user details
+const openModal = (user) => {
+  document.getElementById('userId').textContent = user.id;
+  document.getElementById('userName').textContent = user.username;
+  document.getElementById('userEmail').textContent = user.email;
+  document.getElementById('userRole').textContent = user.role;
+
+  document.getElementById('userModal').style.display = 'block'; // Show modal
+};
+
+// Close the modal when clicking on the close button
+document.getElementById('closeModal').addEventListener('click', () => {
+  document.getElementById('userModal').style.display = 'none'; // Hide modal
+});
+
+// Close the modal if the user clicks outside of the modal
+window.addEventListener('click', (event) => {
+  const modal = document.getElementById('userModal');
+  if (event.target === modal) {
+    modal.style.display = 'none'; // Hide modal
+  }
+});
+
+// Function to delete a user
 const deleteUser = async (userId) => {
   try {
     await fetchData(`http://127.0.0.1:3000/api/users/${userId}`, { method: 'DELETE' });
     showToast('User deleted successfully');
-    fetchUsers(); 
+    fetchUsers(); // Refresh the user list
   } catch (error) {
     showToast('Failed to delete user', 'error');
   }
@@ -69,7 +94,7 @@ const addUser = async (event) => {
       headers: { 'Content-Type': 'application/json' },
     });
     showToast('User added successfully');
-    fetchUsers();
+    fetchUsers(); // Refresh the user list
   } catch (error) {
     showToast('Failed to add user', 'error');
   }

@@ -3,33 +3,60 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>API Fetch Practice</title>
+  <title>Cat Blog with Diary Entries</title>
   <link rel="stylesheet" href="/src/css/style.css" />
 </head>
 <body>
-  <h1>API Fetch and User Management</h1>
-  
-  <button id="fetchItemsBtn">Fetch Items</button>
-  <button id="fetchUsersBtn">Fetch Users</button>
+  <!-- Header -->
+  <header>
+    <h1>HOME CATS</h1>
+    <nav>
+      <a href="#">Login</a>
+    </nav>
+  </header>
 
-  <table id="usersTable">
-    <thead>
-      <tr>
-        <th>Username</th>
-        <th>Email</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+  <!-- Main Content -->
+  <main>
+    <!-- Kissablogi -->
+    <section class="recent-posts">
+      <h2>Recent Posts</h2>
+      <div class="posts-container">
+        <div class="post" id="post1">
+          <img src="https://placekitten.com/300/200" alt="Cat Post One">
+          <h3>Cat Post One</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.</p>
+        </div>
+        <div class="post" id="post2">
+          <img src="https://placekitten.com/300/200" alt="Cat Post Two">
+          <h3>Cat Post Two</h3>
+          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.</p>
+        </div>
+      </div>
+    </section>
 
-  <form class="formpost">
-    <input type="text" id="username" placeholder="Username" required />
-    <input type="password" id="password" placeholder="Password" required />
-    <input type="email" id="email" placeholder="Email" required />
-    <button type="submit">Add User</button>
-  </form>
+    <!-- Cool Cat -osio -->
+    <section class="cool-cat">
+      <h2>Cool Cat</h2>
+      <div class="cool-cat-content">
+        <img src="https://placekitten.com/400/300" alt="Cool Cat">
+        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eum in hic, eaque repudiandae impedit voluptates tempora molestiae! Magni nemo nesciunt recusandae, quos earum animi unde, elus, aliquam illo dicta repellendus.</p>
+      </div>
+    </section>
 
+    <!-- Päiväkirjamerkinnät -->
+    <section class="card-area2">
+      <h2>Päiväkirjamerkinnät</h2>
+      <button class="get_entries">Hae päiväkirjamerkinnät</button>
+      <div class="cards-container"></div> <!-- Kortit luodaan tähän -->
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2023 Cat Blog</p>
+  </footer>
+
+  <!-- JavaScript -->
   <script type="module" src="/src/js/main.js"></script>
 </body>
 </html>

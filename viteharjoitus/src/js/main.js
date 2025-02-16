@@ -1,32 +1,45 @@
-import '/src/css/style.css'
-import javascriptLogo from '/src/javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from '/src/counter.js'
-// main.js
-import { fetchItems } from './items.js';
-import { fetchUsers, addUser } from './users.js';
+import { fetchData, showToast } from './fetch.js';
 
-document.querySelector('#fetchItemsBtn').addEventListener('click', fetchItems);
-document.querySelector('#fetchUsersBtn').addEventListener('click', fetchUsers);
-document.querySelector('.formpost').addEventListener('submit', addUser);
+// Hae päiväkirjamerkinnät ja näytä kortit
+const fetchEntries = async () => {
+  try {
+    const url = '/diary.json'; // Osoite JSON-tiedostoon
+    const entries = await fetchData(url);
 
+    // Tyhjennä korttialue
+    const cardsContainer = document.querySelector('.cards-container');
+    cardsContainer.innerHTML = '';
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+    // Luo kortit jokaisesta merkinnästä
+    entries.forEach(entry => {
+      const card = document.createElement('div');
+      card.classList.add('card');
 
-setupCounter(document.querySelector('#counter'))
+      // Lisää kuva (voit vaihtaa oikean kuvan URL:ään)
+      const cardImg = document.createElement('div');
+      cardImg.classList.add('card-img');
+      cardImg.innerHTML = `<img src="https://placekitten.com/200/300" alt="Kissa">`;
+      card.appendChild(cardImg);
+
+      // Lisää päiväkirjamerkinnän tiedot
+      const cardDiary = document.createElement('div');
+      cardDiary.classList.add('card-diary');
+      cardDiary.innerHTML = `
+        <h4>${entry.entry_date}</h4>
+        <p><strong>Mood:</strong> ${entry.mood}</p>
+        <p><strong>Weight:</strong> ${entry.weight} kg</p>
+        <p><strong>Sleep:</strong> ${entry.sleep_hours} hours</p>
+        <p><strong>Notes:</strong> ${entry.notes}</p>
+      `;
+      card.appendChild(cardDiary);
+
+      // Lisää kortti alueelle
+      cardsContainer.appendChild(card);
+    });
+  } catch (error) {
+    showToast('Failed to fetch entries', 'error');
+  }
+};
+
+// Lisää tapahtumankäsittelijä painikkeelle
+document.querySelector('.get_entries').addEventListener('click', fetchEntries);
